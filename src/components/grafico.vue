@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h1>{{ msg }}</h1>
         <ul>
             <li vfor="json in info">
                 <h1>{{ json }}</h1>
