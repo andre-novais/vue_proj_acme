@@ -13,7 +13,7 @@ import grafico from './components/grafico.vue'
 export default {
   name: 'App',
   components: {
-    HelloWorld,
+    //HelloWorld,
     grafico
   }
 }
