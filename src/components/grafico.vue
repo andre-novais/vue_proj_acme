@@ -18,7 +18,8 @@ export default {
     },
     data(){
         return{
-            info:[{"nome":"andre"},{"nome":"andre"},{"nome":"andre"},{"nome":"andre"},{"nome":"andre"}]
+            info:this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
+            .then(res=>res["body"])
         }
     },
     created(){
