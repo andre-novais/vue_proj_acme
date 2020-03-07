@@ -6,6 +6,7 @@
                 <h1>{{ json }}</h1>
             </li>
         </ul>
+        <h2>{{ this.$http.get("https://projeto-acme.herokuapp.com/financeiro").then(res => res["body"]) }}</h2>
     </div>
     
 </template>
@@ -27,8 +28,7 @@ export default {
             .then(res=>res["body"]).then(lista=>this.info = lista)
 
     }
-
-}
+}   
 </script>
 
 <style scoped>
