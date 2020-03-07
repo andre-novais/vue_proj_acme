@@ -6,26 +6,27 @@
                 <h1>{{ json }}</h1>
             </li>
         </ul>
-        <h2>{{ this.$http.get("https://projeto-acme.herokuapp.com/financeiro").then(res => res["body"]) }}</h2>
     </div>
     
 </template>
 
 <script>
 //var Chart = require("chart.js")
+alert("console log")
+import axios from "axios";
+
 export default {
     props:{
         msg: String
     },
     data(){
         return{
-            info:this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
-            .then(res=>res["body"])
+            info:[]
         }
     },
     created(){
-        this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
-            .then(res=>res["body"]).then(lista=>this.info = lista)
+        axios.get("https://projeto-acme.herokuapp.com/financeiro")
+            .then(res=>this.info = res.body)
 
     }
 }   
