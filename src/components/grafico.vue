@@ -2,7 +2,7 @@
     <div>
         <h1>{{ msg }}</h1>
         <ul>
-            <li v-for="json in info" :key="json.nome">
+            <li v-for="json in info" :key="json.id">
                 <h1>{{ json }}</h1>
             </li>
         </ul>
@@ -21,11 +21,11 @@ export default {
             info:[{"nome":"andre"},{"nome":"andre"},{"nome":"andre"},{"nome":"andre"},{"nome":"andre"}]
         }
     },
-    //created(){
-      //  this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
-        //    .then(res=>res["body"]).then(lista=>this.info = lista)
+    created(){
+        this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
+            .then(res=>res["body"]).then(lista=>this.info = lista)
 
-    //}
+    }
 
 }
 </script>
