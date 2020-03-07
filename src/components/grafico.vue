@@ -11,6 +11,7 @@
 </template>
 
 <script>
+var Chart = require("chart.js")
 export default {
     props:{
         msg: String
@@ -24,7 +25,7 @@ export default {
       //  this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
         //    .then(res=>res["body"]).then(lista=>this.info = lista)
 
-    }
+    //}
 
 }
 </script>
