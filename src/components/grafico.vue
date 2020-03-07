@@ -18,8 +18,10 @@ export default {
     },
     created(){
         this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
-            .then(res => res.json())
+            .then(res => {console.log(res.json())
+                   return res.json()})
             .then(info => this.info = info);
+
     }
 
 }
