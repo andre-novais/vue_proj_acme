@@ -17,12 +17,12 @@ export default {
     },
     data(){
         return{
-            info:[]
+            info:[{"nome":"andre"},{"nome":"andre"},{"nome":"andre"},{"nome":"andre"},{"nome":"andre"}]
         }
     },
-    created(){
-        this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
-            .then(res=>res.body).then(lista=>this.info = lista)
+    //created(){
+      //  this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
+        //    .then(res=>res["body"]).then(lista=>this.info = lista)
 
     }
 
