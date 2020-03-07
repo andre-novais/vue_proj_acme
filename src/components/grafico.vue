@@ -11,7 +11,7 @@
 </template>
 
 <script>
-var Chart = require("chart.js")
+//var Chart = require("chart.js")
 export default {
     props:{
         msg: String
