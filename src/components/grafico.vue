@@ -23,7 +23,7 @@ export default {
     created(){
         this.$http.get("https://projeto-acme.herokuapp.com/financeiro")
             .then(res => {res.forEach(element => {
-                this.info.append(element)
+                this.info.push(element)
             });
                 console.log("hey")
                 console.log(res.json())
