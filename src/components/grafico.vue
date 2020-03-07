@@ -2,7 +2,7 @@
     <div>
         <h1>{{ msg }}</h1>
         <ul>
-            <li vfor="json in info">
+            <li v-for="json in info" :key="json.nome">
                 <h1>{{ json }}</h1>
             </li>
         </ul>
