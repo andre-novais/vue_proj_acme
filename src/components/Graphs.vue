@@ -51,12 +51,16 @@ export default {
         this.db_rh = convert_epoch(this.db_rh)
         get_data()
     },
-/*     computed: {
-        data_fin(){
-            
-        },
+    computed: {
+         get_data :function(){
+        let grupo =  lodash.groupBy(this.db_financeiro, "ds_tipificacao")
+        alert(Object.keys(grupo))
+        let grupo_somado = grupo.map((elemento)=>lodash.sumBy(elemento, "vl_valor"))
+        alert(Object.values(grupo_somado))
+         return Object.values(grupo_somado)
+}
 
-    }, */
+    },
 
     mounted(){
     
@@ -116,13 +120,7 @@ function convert_epoch (arr){
         return new_arr
     }
 
-var get_data = function(){
-    let grupo =  lodash.groupBy(this.db_financeiro, "ds_tipificacao")
-    alert(Object.keys(grupo))
-    let grupo_somado = grupo.map((elemento)=>lodash.sumBy(elemento, "vl_valor"))
-    alert(Object.values(grupo_somado))
-    return Object.values(grupo_somado)
-}
+
 </script>
 
 <style scoped>
