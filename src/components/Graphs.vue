@@ -11,7 +11,9 @@
         <div class="canvas-container" style="position: relative; height:40vh; width:80vw">
             <canvas id="chart_fin"  ></canvas>
         </div>
-       
+       <div>
+           {{  get_data  }}
+       </div>
     </div>
 </template>
 
@@ -49,7 +51,7 @@ export default {
         this.crm = convert_epoch(this.crm)
         this.db_fornecedores = convert_epoch(this.db_fornecedores)
         this.db_rh = convert_epoch(this.db_rh)
-        get_data()
+        
     },
     computed: {
          get_data :function(){
