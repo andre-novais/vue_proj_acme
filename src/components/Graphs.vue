@@ -12,7 +12,7 @@
             <canvas id="chart_fin"  ></canvas>
         </div>
        <div>
-           {{  get_data  }}
+
        </div>
     </div>
 </template>
