@@ -17,7 +17,7 @@
 
 <script>
 var Chart = require('chart.js')
-//var lodash = require("lodash")
+var lodash = require("lodash")
 var moment = require("moment")
 
 
@@ -49,7 +49,7 @@ export default {
         this.crm = convert_epoch(this.crm)
         this.db_fornecedores = convert_epoch(this.db_fornecedores)
         this.db_rh = convert_epoch(this.db_rh)
-
+        get_data()
     },
 /*     computed: {
         data_fin(){
@@ -104,6 +104,8 @@ export default {
 
 
 
+
+
 function convert_epoch (arr){
     function epoch_to_mes(item)
         {
@@ -114,13 +116,13 @@ function convert_epoch (arr){
         return new_arr
     }
 
-/* var get_data = function(){
+var get_data = function(){
     let grupo =  lodash.groupBy(this.db_financeiro, "ds_tipificacao")
     alert(Object.keys(grupo))
     let grupo_somado = grupo.map((elemento)=>lodash.sumBy(elemento, "vl_valor"))
     alert(Object.values(grupo_somado))
     return Object.values(grupo_somado)
-}*/
+}
 </script>
 
 <style scoped>
