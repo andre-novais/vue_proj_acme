@@ -63,7 +63,9 @@ export default {
 
  new Chart(chart_fin_elem, {
     type: 'bar',
-    data: {labels:["janeiro","fevereiro"], datasets:{data:[100,200]}},
+    data: {labels:["janeiro","fevereiro"], datasets:{backgroundColor: 'rgb(255, 99, 132)',
+            borderColor: 'rgb(255, 99, 132)',
+ data:[100,200]}},
     options: {
         scales: {
             yAxes: [{
