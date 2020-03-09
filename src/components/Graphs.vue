@@ -65,10 +65,10 @@ export default {
     type: 'line',
     data: {
         labels:["janeiro","fevereiro","março"], 
-        datasets:{
+        datasets :[{
             backgroundColor: 'rgb(255, 99, 132)',
             borderColor: 'rgb(255, 99, 132)',
-            data:[100,200, 0.4]}},
+            data:[100,200, 0.4]}],
     options: {
         scales: {
             yAxes: [{
