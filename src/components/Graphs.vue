@@ -8,7 +8,7 @@
 
             </li>
         </ul>
-        <div class="canvas-container" width="80vw" height="50vh">
+        <div class="canvas-container" style="position: relative; height:40vh; width:80vw">
             <canvas id="chart_fin"  ></canvas>
         </div>
        
