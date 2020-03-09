@@ -13,7 +13,7 @@
 </template>
 
 <script>
-//var Chart = require('chart.js')
+var Chart = require('chart.js')
 //var lodash = require("lodash")
 var moment = require("moment")
 
@@ -95,7 +95,7 @@ function transforma_em_ponto(arr, x, y){
 
 
 
-/* 
+
 function convert_epoch (arr){
     function epoch_to_mes(item)
         {
@@ -104,7 +104,7 @@ function convert_epoch (arr){
         }
         let new_arr = arr.map(epoch_to_mes);
         return new_arr
-    } */
+    }
 
 /* var get_data = function(){
     let grupo =  lodash.groupBy(this.db_financeiro, "ds_tipificacao")
@@ -112,7 +112,7 @@ function convert_epoch (arr){
     let grupo_somado = grupo.map((elemento)=>lodash.sumBy(elemento, "vl_valor"))
     alert(Object.values(grupo_somado))
     return Object.values(grupo_somado)
-} */
+}*/
 </script>
 
 <style scoped>
