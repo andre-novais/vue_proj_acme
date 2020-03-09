@@ -53,7 +53,7 @@ export default {
         this.db_rh = convert_epoch(this.db_rh)
         
     },
-    computed: {
+/*     computed: {
          get_data :function(){
         let grupo =  lodash.groupBy(this.db_financeiro, "ds_tipificacao")
         alert(Object.keys(grupo))
@@ -63,7 +63,7 @@ export default {
 }
 
     },
-
+ */
     mounted(){
     
     var chart_fin_elem = document.getElementById('chart_fin');
