@@ -61,7 +61,7 @@ export default {
 
  
 
-var myChart = new Chart(chart_fin_elem, {
+ new Chart(chart_fin_elem, {
     type: 'bar',
     data: {labels:["janeiro","fevereiro"], datasets:{data:[100,200]}},
     options: {
@@ -82,7 +82,7 @@ var myChart = new Chart(chart_fin_elem, {
 } */
 
 
-function transforma_em_ponto(arr, x, y){
+/* function transforma_em_ponto(arr, x, y){
     function strip_em_ponto(item){
         let new_item = {
                         "x": item[x],
@@ -91,7 +91,7 @@ function transforma_em_ponto(arr, x, y){
         return new_item;
     }
     return arr.map(strip_em_ponto);
-}
+} */
 
 
 
