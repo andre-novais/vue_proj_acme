@@ -8,7 +8,10 @@
 
             </li>
         </ul>
-        <canvas id="chart_fin"  width="80%" height="50%"></canvas>
+        <div class="canvas-container" width="80vw" height="50vh">
+            <canvas id="chart_fin"  ></canvas>
+        </div>
+       
     </div>
 </template>
 
@@ -121,5 +124,6 @@ function convert_epoch (arr){
 </script>
 
 <style scoped>
+
 
 </style>
