@@ -56,36 +56,14 @@ export default {
     }, */
 
     mounted(){
-/*         var chart_fin_elem = document.getElementById('chart_fin');
+    
+    var chart_fin_elem = document.getElementById('chart_fin');
 
- */
+ 
 
-/* var myChart = new Chart(chart_fin_elem, {
+var myChart = new Chart(chart_fin_elem, {
     type: 'bar',
-    data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: get_data(),
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',
-                'rgba(54, 162, 235, 0.2)',
-                'rgba(255, 206, 86, 0.2)',
-                'rgba(75, 192, 192, 0.2)',
-                'rgba(153, 102, 255, 0.2)',
-                'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-                'rgba(54, 162, 235, 1)',
-                'rgba(255, 206, 86, 1)',
-                'rgba(75, 192, 192, 1)',
-                'rgba(153, 102, 255, 1)',
-                'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
+    data: {labels:["janeiro","fevereiro"], datasets:{data:[100,200]}},
     options: {
         scales: {
             yAxes: [{
@@ -95,7 +73,7 @@ export default {
             }]
         }
     }
-}); */
+});
     }
 }
 
@@ -104,21 +82,20 @@ export default {
 } */
 
 
-/* function transforma_em_ponto(arr, name, x, y){
+function transforma_em_ponto(arr, x, y){
     function strip_em_ponto(item){
         let new_item = {
-                        "name": item[name],
                         "x": item[x],
                         "y": item[y]
                         };
         return new_item;
     }
     return arr.map(strip_em_ponto);
-} */
+}
 
 
 
-
+/* 
 function convert_epoch (arr){
     function epoch_to_mes(item)
         {
@@ -127,7 +104,7 @@ function convert_epoch (arr){
         }
         let new_arr = arr.map(epoch_to_mes);
         return new_arr
-    }
+    } */
 
 /* var get_data = function(){
     let grupo =  lodash.groupBy(this.db_financeiro, "ds_tipificacao")
