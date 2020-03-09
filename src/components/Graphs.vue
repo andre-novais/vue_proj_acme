@@ -14,7 +14,7 @@
 
 <script>
 //var Chart = require('chart.js')
-var lodash = require("lodash")
+//var lodash = require("lodash")
 var moment = require("moment")
 
 
