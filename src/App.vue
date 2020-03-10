@@ -1,19 +1,19 @@
 <template>
   <div id="app">
     <div>
-      <Graphs/>
+      <graficosfinanceiros/>
     </div>
   </div>
 </template>
 
 
 <script>
-import Graphs from './components/Graphs.vue'
+import graficosfinanceiros from './components/graficos/graficos-financeiros.vue'
 
 export default {
   name: 'App',
   components: {
-    "Graphs":Graphs
+    graficosfinanceiros
   }
 }
 </script>
