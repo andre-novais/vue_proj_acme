@@ -57,7 +57,6 @@ export default {
             let grupos_pos_mes = lodash.groupBy(db_com_data,'occured_at')
             let arrs= []
             Object.keys(grupos_pos_mes).forEach(key =>arrs.push(grupo_sum(grupos_pos_mes[key],'ds_tipificacao','vl_valor')))
-            alert(JSON.stringify(arrs))
             let custos = []
             
             for(let i = 0;i<arrs.length;i++){
