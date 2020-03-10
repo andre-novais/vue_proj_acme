@@ -1,131 +1,119 @@
 <template>
     <div>
-        <ul>
-            <li v-for="json in db_financeiro" v-bind:key="json.id">
-                <h1>
-                    {{ JSON.stringify(json)  }}
-                </h1>
-
-            </li>
-        </ul>
-        <div class="canvas-container" style="position: relative; height:40vh; width:80vw">
-            <canvas id="chart_fin"  ></canvas>
+        <div >
+            <line-chart :chart-data="dataset"/>
         </div>
-       <div>
-
-       </div>
-    </div>
+        <div>
+            <button @click="chart_fin()">Dash - Financeiro</button>
+        </div>
+    </div>  
 </template>
 
 <script>
-var Chart = require('chart.js')
-var lodash = require("lodash")
-var moment = require("moment")
+import LineChart from './line-chart.js'
+import lodash from 'lodash'
+import moment from 'moment'
+function convert_epoch (arr){
+            function epoch_to_mes(item){
+                item["occured_at"] = moment(parseInt(item["occured_at"])).format("YYYY-MM")
+                return item
+                }
+            let new_arr = arr.map(epoch_to_mes);
+            return new_arr
+            } 
 
-
+function grupo_sum (arr, categoria, valores){
+                let grupos = lodash.groupBy(arr, categoria)
+                let somas = []
+                Object.keys(grupos).forEach(key => somas.push(lodash.sumBy(grupos[key],valores)))
+                return [Object.keys(grupos),somas]
+                }
+function cria_dataset(nomes, valores){
+    return {
+        labels: nomes,
+        datasets:[
+            {
+                label: JSON.stringify(nomes),
+                data: valores
+            }
+        ]
+    }
+}
 
 export default {
     'name': 'graphs',
+    components:{LineChart},
     data(){
         return {
             db_financeiro:[],
             db_crm:[],
             db_fornecedores:[],
             db_loja_online:[],
-            db_rh:[]
+            db_rh:[],
+            db_teste:[],
+            dataset:[]
         }
             
     },
     created(){
-        this.db_loja_online = [{"id":28,"id_compra":19,"id_cliente":6,"js_produtos":{"1":{"preco":5,"quantidade":25}},"bo_checkout":true,"js_dados_financeiros":{"object":"valor"},"ds_evento":"compra_efetuada","occured_at":"1578487853225"},{"id":2,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1}},"bo_checkout":false,"js_dados_financeiros":null,"ds_evento":"inclusão-exclusão","occured_at":"1567915751619"},{"id":3,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1},"19":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"inclusão-exclusão","occured_at":"1567915950239"},{"id":4,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1},"19":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"inclusão-exclusão","occured_at":"1567919059964"},{"id":5,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1},"19":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"compra_efetuada","occured_at":"1567919283073"},{"id":6,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1},"19":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"compra_efetuada","occured_at":"1567919516672"},{"id":7,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1},"19":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"compra_efetuada","occured_at":"1567919685109"},{"id":8,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1},"19":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"compra_efetuada","occured_at":"1567919764853"},{"id":9,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1},"19":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"compra_efetuada","occured_at":"1567919922045"},{"id":10,"id_compra":1,"id_cliente":1,"js_produtos":{"1":{"preco":4,"quantidade":1},"19":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"compra_efetuada","occured_at":"1567920287146"},{"id":11,"id_compra":1,"id_cliente":2,"js_produtos":{"1":{"preco":4,"quantidade":1},"4":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"compra_efetuada","occured_at":"1567920494465"},{"id":12,"id_compra":2,"id_cliente":3,"js_produtos":{"1":{"preco":4,"quantidade":1},"4":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":{"banco":64,"agencia":42},"ds_evento":"compra_efetuada","occured_at":"1567920541005"},{"id":13,"id_compra":3,"id_cliente":4,"js_produtos":{"2":{"preco":9,"quantidade":1},"3":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":null,"ds_evento":"inicio_checkout","occured_at":"1567920868289"},{"id":14,"id_compra":5,"id_cliente":1,"js_produtos":{"2":{"preco":9,"quantidade":1},"3":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":null,"ds_evento":"inicio_checkout","occured_at":"1567920937913"},{"id":15,"id_compra":6,"id_cliente":2,"js_produtos":{"2":{"preco":9,"quantidade":1},"3":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":null,"ds_evento":"inclusão-exclusão","occured_at":"1567920964164"},{"id":16,"id_compra":6,"id_cliente":3,"js_produtos":{"2":{"preco":9,"quantidade":1},"3":{"preco":6,"quantidade":2}},"bo_checkout":true,"js_dados_financeiros":null,"ds_evento":"inclusão-exclusão","occured_at":"1567920970445"},{"id":17,"id_compra":7,"id_cliente":4,"js_produtos":{"2":{"preco":9,"quantidade":1},"3":{"preco":6,"quantidade":2}},"bo_checkout":false,"js_dados_financeiros":null,"ds_evento":"inclusão-exclusão","occured_at":"1567921036699"},{"id":18,"id_compra":8,"id_cliente":5,"js_produtos":{"2":{"preco":9,"quantidade":1},"3":{"preco":6,"quantidade":2}},"bo_checkout":false,"js_dados_financeiros":null,"ds_evento":"inclusão-exclusão","occured_at":"1567921044985"},{"id":19,"id_compra":10,"id_cliente":2,"js_produtos":{"1":{"preco":5,"quantidade":10}},"bo_checkout":true,"js_dados_financeiros":{"chave":"valor"},"ds_evento":"compra_efetuada","occured_at":"1570552495962"},{"id":20,"id_compra":11,"id_cliente":3,"js_produtos":{"2":{"preco":9,"quantidade":15}},"bo_checkout":true,"js_dados_financeiros":{"chave":"valor"},"ds_evento":"compra_efetuada","occured_at":"1570552522358"},{"id":21,"id_compra":12,"id_cliente":3,"js_produtos":{"2":{"preco":9,"quantidade":15}},"bo_checkout":true,"js_dados_financeiros":null,"ds_evento":"inicio_checkout","occured_at":"1570552560981"},{"id":22,"id_compra":13,"id_cliente":5,"js_produtos":{"1":{"preco":5,"quantidade":13}},"bo_checkout":true,"js_dados_financeiros":{"object":"object"},"ds_evento":"compra_efetuada","occured_at":"1573183387501"},{"id":23,"id_compra":14,"id_cliente":7,"js_produtos":{"2":{"preco":9,"quantidade":16}},"bo_checkout":true,"js_dados_financeiros":{"object":"object"},"ds_evento":"compra_efetuada","occured_at":"1573183431554"},{"id":24,"id_compra":15,"id_cliente":8,"js_produtos":{"2":{"preco":9,"quantidade":16}},"bo_checkout":true,"js_dados_financeiros":{"object":"object"},"ds_evento":"inicio_checkout","occured_at":"1573183465217"},{"id":25,"id_compra":16,"id_cliente":1,"js_produtos":{"1":{"preco":5,"quantidade":20},"19":{"preco":9,"quantidade":12}},"bo_checkout":true,"js_dados_financeiros":{"object":"valor"},"ds_evento":"compra_efetuada","occured_at":"1575814565644"},{"id":26,"id_compra":17,"id_cliente":9,"js_produtos":{"2":{"preco":9,"quantidade":27},"3":{"preco":39,"quantidade":7}},"bo_checkout":true,"js_dados_financeiros":{"object":"valor"},"ds_evento":"compra_efetuada","occured_at":"1575814720243"},{"id":27,"id_compra":18,"id_cliente":10,"js_produtos":{"2":{"preco":9,"quantidade":27},"3":{"preco":39,"quantidade":7}},"bo_checkout":true,"js_dados_financeiros":null,"ds_evento":"inicio_checkout","occured_at":"1575814807251"},{"id":29,"id_compra":20,"id_cliente":5,"js_produtos":{"2":{"preco":9,"quantidade":20}},"bo_checkout":true,"js_dados_financeiros":{"object":"valor"},"ds_evento":"compra_efetuada","occured_at":"1578487906262"},{"id":30,"id_compra":21,"id_cliente":1,"js_produtos":{"1":{"preco":5,"quantidade":35}},"bo_checkout":true,"js_dados_financeiros":{"object":"object"},"ds_evento":"compra_efetuada","occured_at":"1581119075917"},{"id":31,"id_compra":22,"id_cliente":17,"js_produtos":{"2":{"preco":9,"quantidade":20}},"bo_checkout":true,"js_dados_financeiros":{"object":"object"},"ds_evento":"compra_efetuada","occured_at":"1581119115922"},{"id":32,"id_compra":23,"id_cliente":20,"js_produtos":{"2":{"preco":9,"quantidade":34}},"bo_checkout":true,"js_dados_financeiros":{"object":"object"},"ds_evento":"compra_efetuada","occured_at":"1583749861138"},{"id":33,"id_compra":24,"id_cliente":4,"js_produtos":{"1":{"preco":5,"quantidade":45}},"bo_checkout":true,"js_dados_financeiros":{"object":"object"},"ds_evento":"compra_efetuada","occured_at":"1583749884719"}];
         this.$http.get("https://projeto-acme.herokuapp.com/financeiro", {headers: {'Access-Control-Allow-Origin': "*"}})
-            .then(res => this.db_financeiro = res['body']);
-            //alert(this.db_financeiro);
-        this.crm = [{"id":1,"id_cliente":1,"ds_evento":"cliente_ativado","occured_at":"1567919283074"},{"id":2,"id_cliente":1,"ds_evento":"cliente_ativado","occured_at":"1567919516672"},{"id":3,"id_cliente":1,"ds_evento":"cliente_ativado","occured_at":"1567919685109"},{"id":4,"id_cliente":1,"ds_evento":"cliente_ativado","occured_at":"1567919764854"},{"id":5,"id_cliente":1,"ds_evento":"cliente_ativado","occured_at":"1567919922045"},{"id":6,"id_cliente":1,"ds_evento":"cliente_ativado","occured_at":"1567920287146"},{"id":7,"id_cliente":2,"ds_evento":"cliente_ativado","occured_at":"1567920494466"},{"id":8,"id_cliente":3,"ds_evento":"cliente_ativado","occured_at":"1567920541006"},{"id":9,"id_cliente":1,"ds_evento":"cliente_novo","occured_at":"1567921144267"},{"id":10,"id_cliente":2,"ds_evento":"cliente_novo","occured_at":"1567921147394"},{"id":11,"id_cliente":3,"ds_evento":"cliente_novo","occured_at":"1567921151200"},{"id":12,"id_cliente":4,"ds_evento":"cliente_novo","occured_at":"1567921154349"},{"id":13,"id_cliente":5,"ds_evento":"cliente_novo","occured_at":"1567921158015"},{"id":14,"id_cliente":6,"ds_evento":"cliente_novo","occured_at":"1567921160674"},{"id":15,"id_cliente":7,"ds_evento":"cliente_novo","occured_at":"1567921163533"},{"id":16,"id_cliente":8,"ds_evento":"cliente_novo","occured_at":"1567921169682"},{"id":17,"id_cliente":9,"ds_evento":"cliente_novo","occured_at":"1570551571001"},{"id":18,"id_cliente":10,"ds_evento":"cliente_novo","occured_at":"1570551576989"},{"id":19,"id_cliente":11,"ds_evento":"cliente_novo","occured_at":"1570551579870"},{"id":20,"id_cliente":2,"ds_evento":"cliente_ativado","occured_at":"1570552478306"},{"id":21,"id_cliente":2,"ds_evento":"cliente_ativado","occured_at":"1570552495962"},{"id":22,"id_cliente":3,"ds_evento":"cliente_ativado","occured_at":"1570552522359"},{"id":23,"id_cliente":13,"ds_evento":"cliente_novo","occured_at":"1573182615724"},{"id":24,"id_cliente":14,"ds_evento":"cliente_novo","occured_at":"1573182632634"},{"id":25,"id_cliente":5,"ds_evento":"cliente_ativado","occured_at":"1573183387502"},{"id":26,"id_cliente":7,"ds_evento":"cliente_ativado","occured_at":"1573183431554"},{"id":27,"id_cliente":15,"ds_evento":"cliente_novo","occured_at":"1575813844874"},{"id":28,"id_cliente":1,"ds_evento":"cliente_ativado","occured_at":"1575814565644"},{"id":29,"id_cliente":9,"ds_evento":"cliente_ativado","occured_at":"1575814720243"},{"id":30,"id_cliente":16,"ds_evento":"cliente_novo","occured_at":"1578444907989"},{"id":31,"id_cliente":17,"ds_evento":"cliente_novo","occured_at":"1578444921717"},{"id":32,"id_cliente":6,"ds_evento":"cliente_ativado","occured_at":"1578487853225"},{"id":33,"id_cliente":5,"ds_evento":"cliente_ativado","occured_at":"1578487906262"},{"id":34,"id_cliente":18,"ds_evento":"cliente_novo","occured_at":"1581118321383"},{"id":35,"id_cliente":19,"ds_evento":"cliente_novo","occured_at":"1581118326065"},{"id":36,"id_cliente":20,"ds_evento":"cliente_novo","occured_at":"1581118330407"},{"id":37,"id_cliente":21,"ds_evento":"cliente_novo","occured_at":"1581118334114"},{"id":38,"id_cliente":1,"ds_evento":"cliente_ativado","occured_at":"1581119075917"},{"id":39,"id_cliente":17,"ds_evento":"cliente_ativado","occured_at":"1581119115922"},{"id":40,"id_cliente":22,"ds_evento":"cliente_novo","occured_at":"1583749066085"},{"id":41,"id_cliente":23,"ds_evento":"cliente_novo","occured_at":"1583749070043"},{"id":42,"id_cliente":24,"ds_evento":"cliente_novo","occured_at":"1583749074067"},{"id":43,"id_cliente":25,"ds_evento":"cliente_novo","occured_at":"1583749078494"},{"id":44,"id_cliente":26,"ds_evento":"cliente_novo","occured_at":"1583749085049"},{"id":45,"id_cliente":27,"ds_evento":"cliente_novo","occured_at":"1583749093230"},{"id":46,"id_cliente":20,"ds_evento":"cliente_ativado","occured_at":"1583749861138"},{"id":47,"id_cliente":4,"ds_evento":"cliente_ativado","occured_at":"1583749884719"}];
-        //this.db_financeiro = [{"id":1,"ds_tipificacao":"custo","vl_valor":750,"occured_at":"1567907541971"},{"id":2,"ds_tipificacao":"custo","vl_valor":600,"occured_at":"1567907551807"},{"id":3,"ds_tipificacao":"custo","vl_valor":300,"occured_at":"1567907560445"},{"id":4,"ds_tipificacao":"despesa","vl_valor":1000,"occured_at":"1567907583325"},{"id":5,"ds_tipificacao":"despesa","vl_valor":1300,"occured_at":"1567907588421"},{"id":6,"ds_tipificacao":"despesa","vl_valor":900,"occured_at":"1567907623621"},{"id":7,"ds_tipificacao":"receita","vl_valor":10,"occured_at":"1567907639393"},{"id":8,"ds_tipificacao":"receita","vl_valor":19,"occured_at":"1567907708121"},{"id":9,"ds_tipificacao":"receita","vl_valor":25,"occured_at":"1567907766892"},{"id":10,"ds_tipificacao":"entrada_com_contrapartida","vl_valor":20000,"occured_at":"1567907815732"},{"id":11,"ds_tipificacao":"custo","vl_valor":16,"occured_at":"1567919685109"},{"id":12,"ds_tipificacao":"custo","vl_valor":12,"occured_at":"1567919685113"},{"id":13,"ds_tipificacao":"custo","vl_valor":16,"occured_at":"1567919764854"},{"id":14,"ds_tipificacao":"custo","vl_valor":16,"occured_at":"1567919922045"},{"id":15,"ds_tipificacao":"receita","vl_valor":16,"occured_at":"1567920287147"},{"id":16,"ds_tipificacao":"custo","vl_valor":12,"occured_at":"1567920287147"},{"id":17,"ds_tipificacao":"receita","vl_valor":16,"occured_at":"1567920494466"},{"id":18,"ds_tipificacao":"receita","vl_valor":16,"occured_at":"1567920541006"},{"id":19,"ds_tipificacao":"custo","vl_valor":400,"occured_at":"1567921302191"},{"id":20,"ds_tipificacao":"custo","vl_valor":600,"occured_at":"1567921341218"},{"id":21,"ds_tipificacao":"custo","vl_valor":300,"occured_at":"1567921375683"},{"id":22,"ds_tipificacao":"custo","vl_valor":300,"occured_at":"1567921404608"},{"id":23,"ds_tipificacao":"custo","vl_valor":400,"occured_at":"1570551345102"},{"id":24,"ds_tipificacao":"custo","vl_valor":350,"occured_at":"1570551418861"},{"id":25,"ds_tipificacao":"despesa","vl_valor":1500,"occured_at":"1570551721680"},{"id":26,"ds_tipificacao":"despesa","vl_valor":800,"occured_at":"1570551731120"},{"id":27,"ds_tipificacao":"custo","vl_valor":800,"occured_at":"1570551750461"},{"id":28,"ds_tipificacao":"entrada_com_contrapartida","vl_valor":10000,"occured_at":"1570551782917"},{"id":29,"ds_tipificacao":"receita","vl_valor":50,"occured_at":"1570552478307"},{"id":30,"ds_tipificacao":"receita","vl_valor":50,"occured_at":"1570552495962"},{"id":31,"ds_tipificacao":"receita","vl_valor":135,"occured_at":"1570552522359"},{"id":32,"ds_tipificacao":"despesa","vl_valor":1400,"occured_at":"1573182801887"},{"id":33,"ds_tipificacao":"custo","vl_valor":600,"occured_at":"1573182816203"},{"id":34,"ds_tipificacao":"entrada_com_contrapartida","vl_valor":10000,"occured_at":"1573182855245"},{"id":35,"ds_tipificacao":"despesa","vl_valor":3000,"occured_at":"1573182878528"},{"id":36,"ds_tipificacao":"custo","vl_valor":400,"occured_at":"1573183064290"},{"id":37,"ds_tipificacao":"custo","vl_valor":750,"occured_at":"1573183115011"},{"id":38,"ds_tipificacao":"receita","vl_valor":65,"occured_at":"1573183387502"},{"id":39,"ds_tipificacao":"receita","vl_valor":144,"occured_at":"1573183431554"},{"id":40,"ds_tipificacao":"despesa","vl_valor":3400,"occured_at":"1575813930599"},{"id":41,"ds_tipificacao":"custo","vl_valor":900,"occured_at":"1575813999424"},{"id":42,"ds_tipificacao":"entrada_com_contrapartida","vl_valor":10000,"occured_at":"1575814020332"},{"id":43,"ds_tipificacao":"custo","vl_valor":650,"occured_at":"1575814202189"},{"id":44,"ds_tipificacao":"custo","vl_valor":600,"occured_at":"1575814277204"},{"id":45,"ds_tipificacao":"receita","vl_valor":208,"occured_at":"1575814565644"},{"id":46,"ds_tipificacao":"custo","vl_valor":108,"occured_at":"1575814565645"},{"id":47,"ds_tipificacao":"receita","vl_valor":516,"occured_at":"1575814720244"},{"id":48,"ds_tipificacao":"entrada_com_contrapartida","vl_valor":10000,"occured_at":"1578445062780"},{"id":49,"ds_tipificacao":"despesa","vl_valor":4500,"occured_at":"1578445079045"},{"id":50,"ds_tipificacao":"custo","vl_valor":1500,"occured_at":"1578445087721"},{"id":51,"ds_tipificacao":"custo","vl_valor":400,"occured_at":"1578445717360"},{"id":52,"ds_tipificacao":"custo","vl_valor":700,"occured_at":"1578487562330"},{"id":53,"ds_tipificacao":"receita","vl_valor":125,"occured_at":"1578487853226"},{"id":54,"ds_tipificacao":"receita","vl_valor":180,"occured_at":"1578487906262"},{"id":55,"ds_tipificacao":"despesa","vl_valor":6000,"occured_at":"1581118425604"},{"id":56,"ds_tipificacao":"custo","vl_valor":4000,"occured_at":"1581118437499"},{"id":57,"ds_tipificacao":"entrada_com_contrapartida","vl_valor":10000,"occured_at":"1581118454174"},{"id":58,"ds_tipificacao":"custo","vl_valor":650,"occured_at":"1581118613621"},{"id":59,"ds_tipificacao":"custo","vl_valor":700,"occured_at":"1581118732680"},{"id":60,"ds_tipificacao":"receita","vl_valor":175,"occured_at":"1581119075917"},{"id":61,"ds_tipificacao":"receita","vl_valor":180,"occured_at":"1581119115922"},{"id":62,"ds_tipificacao":"despesa","vl_valor":7000,"occured_at":"1583749185728"},{"id":63,"ds_tipificacao":"custo","vl_valor":5000,"occured_at":"1583749198128"},{"id":64,"ds_tipificacao":"entrada_com_contrapartida","vl_valor":10000,"occured_at":"1583749341458"},{"id":65,"ds_tipificacao":"custo","vl_valor":400,"occured_at":"1583749438368"},{"id":66,"ds_tipificacao":"custo","vl_valor":300,"occured_at":"1583749562733"},{"id":67,"ds_tipificacao":"receita","vl_valor":306,"occured_at":"1583749861139"},{"id":68,"ds_tipificacao":"receita","vl_valor":225,"occured_at":"1583749884719"}];
-        this.db_fornecedores = [{"id":1,"cd_fornecedor":"71648521000","ds_evento":"compra_por_venda_descoberta","id_produto":19,"vl_quantidade":2,"vl_transacao":12,"occured_at":"1567920287147"},{"id":2,"cd_fornecedor":"43999424000","ds_evento":"compra","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1567921302191"},{"id":3,"cd_fornecedor":"43999424000","ds_evento":"recebimento","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1567921314358"},{"id":4,"cd_fornecedor":"43999424000","ds_evento":"compra","id_produto":2,"vl_quantidade":100,"vl_transacao":600,"occured_at":"1567921341217"},{"id":5,"cd_fornecedor":"439994240000","ds_evento":"recebimento","id_produto":2,"vl_quantidade":100,"vl_transacao":600,"occured_at":"1567921362272"},{"id":6,"cd_fornecedor":"439994240022","ds_evento":"compra","id_produto":3,"vl_quantidade":100,"vl_transacao":300,"occured_at":"1567921375683"},{"id":7,"cd_fornecedor":"439994240022","ds_evento":"recebimento","id_produto":3,"vl_quantidade":100,"vl_transacao":300,"occured_at":"1567921391771"},{"id":8,"cd_fornecedor":"439994240022","ds_evento":"compra","id_produto":5,"vl_quantidade":100,"vl_transacao":300,"occured_at":"1567921404608"},{"id":9,"cd_fornecedor":"439994240022","ds_evento":"recebimento","id_produto":5,"vl_quantidade":100,"vl_transacao":300,"occured_at":"1567921412487"},{"id":10,"cd_fornecedor":"439994240022","ds_evento":"compra","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1570551345101"},{"id":11,"cd_fornecedor":"439994240022","ds_evento":"recebimento","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1570551352654"},{"id":12,"cd_fornecedor":"439994240000","ds_evento":"compra","id_produto":2,"vl_quantidade":100,"vl_transacao":350,"occured_at":"1570551418861"},{"id":13,"cd_fornecedor":"439994240000","ds_evento":"recebimento","id_produto":2,"vl_quantidade":100,"vl_transacao":350,"occured_at":"1570551522924"},{"id":14,"cd_fornecedor":"43999424000","ds_evento":"compra","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1573183064289"},{"id":15,"cd_fornecedor":"43999424000","ds_evento":"recebimento","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1573183073241"},{"id":16,"cd_fornecedor":"43999424022","ds_evento":"compra","id_produto":2,"vl_quantidade":100,"vl_transacao":750,"occured_at":"1573183115011"},{"id":17,"cd_fornecedor":"43999424022","ds_evento":"recebimento","id_produto":2,"vl_quantidade":100,"vl_transacao":750,"occured_at":"1573183122998"},{"id":18,"cd_fornecedor":"43999424000","ds_evento":"compra","id_produto":1,"vl_quantidade":200,"vl_transacao":650,"occured_at":"1575814202189"},{"id":19,"cd_fornecedor":"43999424000","ds_evento":"recebimento","id_produto":1,"vl_quantidade":200,"vl_transacao":650,"occured_at":"1575814251378"},{"id":20,"cd_fornecedor":"43999424022","ds_evento":"compra","id_produto":2,"vl_quantidade":200,"vl_transacao":600,"occured_at":"1575814277204"},{"id":21,"cd_fornecedor":"43999424022","ds_evento":"recebimento","id_produto":2,"vl_quantidade":200,"vl_transacao":600,"occured_at":"1575814295205"},{"id":22,"cd_fornecedor":"71648521000","ds_evento":"compra_por_venda_descoberta","id_produto":19,"vl_quantidade":12,"vl_transacao":108,"occured_at":"1575814565645"},{"id":23,"cd_fornecedor":"43999424000","ds_evento":"compra","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1578445717360"},{"id":24,"cd_fornecedor":"43999424000","ds_evento":"recebimento","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1578445726921"},{"id":25,"cd_fornecedor":"43999424022","ds_evento":"compra","id_produto":2,"vl_quantidade":100,"vl_transacao":700,"occured_at":"1578487562329"},{"id":26,"cd_fornecedor":"43999424022","ds_evento":"recebimento","id_produto":2,"vl_quantidade":100,"vl_transacao":700,"occured_at":"1578487573715"},{"id":27,"cd_fornecedor":"43999424000","ds_evento":"compra","id_produto":1,"vl_quantidade":200,"vl_transacao":650,"occured_at":"1581118613621"},{"id":28,"cd_fornecedor":"43999424000","ds_evento":"recebimento","id_produto":1,"vl_quantidade":200,"vl_transacao":650,"occured_at":"1581118623321"},{"id":29,"cd_fornecedor":"43999424022","ds_evento":"compra","id_produto":1,"vl_quantidade":200,"vl_transacao":700,"occured_at":"1581118732680"},{"id":30,"cd_fornecedor":"43999424022","ds_evento":"recebimento","id_produto":1,"vl_quantidade":200,"vl_transacao":700,"occured_at":"1581118751326"},{"id":31,"cd_fornecedor":"43999424000","ds_evento":"compra","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1583749438368"},{"id":32,"cd_fornecedor":"43999424000","ds_evento":"recebimento","id_produto":1,"vl_quantidade":100,"vl_transacao":400,"occured_at":"1583749542090"},{"id":33,"cd_fornecedor":"43999424022","ds_evento":"compra","id_produto":2,"vl_quantidade":100,"vl_transacao":300,"occured_at":"1583749562733"},{"id":34,"cd_fornecedor":"43999424022","ds_evento":"recebimento","id_produto":2,"vl_quantidade":100,"vl_transacao":300,"occured_at":"1583749580938"}];
-        this.db_rh = [{"id":1,"cd_funcionario":"17830018790","ds_evento":"contratacao","ds_cargo":"gerente","occured_at":"1567907980138"},{"id":2,"cd_funcionario":"17830018791","ds_evento":"contratacao","ds_cargo":"assistente","occured_at":"1567907999288"},{"id":3,"cd_funcionario":"17830018791","ds_evento":"contratacao","ds_cargo":"desenvolvedor","occured_at":"1567908013698"},{"id":4,"cd_funcionario":"17830018790","ds_evento":"promocao","ds_cargo":"diretor","occured_at":"1570551956261"},{"id":5,"cd_funcionario":"17830018791","ds_evento":"desligamento","ds_cargo":"assistente","occured_at":"1570552017976"},{"id":6,"cd_funcionario":"17830018792","ds_evento":"contratacao","ds_cargo":"assistente","occured_at":"1570552096973"},{"id":7,"cd_funcionario":"17830018793","ds_evento":"contratacao","ds_cargo":"estagiaro_dev","occured_at":"1570552115919"},{"id":8,"cd_funcionario":"17830018794","ds_evento":"contratacao","ds_cargo":"gerente_UX","occured_at":"1573183703850"},{"id":9,"cd_funcionario":"17830018791","ds_evento":"promocao","ds_cargo":"gerente","occured_at":"1573183835322"},{"id":10,"cd_funcionario":"17830018795","ds_evento":"contratacao","ds_cargo":"desenvolvedor_front","occured_at":"1578488095054"}];
-
-        this.db_financeiro = convert_epoch(this.db_financeiro)
-        this.db_loja_online = convert_epoch(this.db_loja_online)
-        this.crm = convert_epoch(this.crm)
-        this.db_fornecedores = convert_epoch(this.db_fornecedores)
-        this.db_rh = convert_epoch(this.db_rh)
-        
+            .then(res => this.db_financeiro = res["body"])
     },
-/*     computed: {
-         get_data :function(){
-        let grupo =  lodash.groupBy(this.db_financeiro, "ds_tipificacao")
-        alert(Object.keys(grupo))
-        let grupo_somado = grupo.map((elemento)=>lodash.sumBy(elemento, "vl_valor"))
-        alert(Object.values(grupo_somado))
-         return Object.values(grupo_somado)
+    methods:{
+        chart_fin (){
+            let db_filtrado = this.db_financeiro.filter(json => json['ds_tipificacao']!='entrada_com_contrapartida');
+            let db_com_sort = db_filtrado.sort((a,b)=>a['occured_at']>b['occured_at']?1:-1);
+            let db_com_data = convert_epoch(db_com_sort);
+            let grupos_pos_mes = lodash.groupBy(db_com_data,'occured_at')
+            let arrs= []
+            Object.keys(grupos_pos_mes).forEach(key =>arrs.push(grupo_sum(grupos_pos_mes[key],'ds_tipificacao','vl_valor')))
+            alert(JSON.stringify(arrs))
+            let custos = []
+            
+            for(let i = 0;i<arrs.length;i++){
+                let custos_index = arrs[i][0].indexOf('custo');
+                custos.push(arrs[i][1][custos_index]);
+            }
+            
+            let despesas = []
+            
+            for(let i = 0;i<arrs.length;i++){
+                let despesa_index = arrs[i][0].indexOf('despesa');
+                despesas.push(arrs[i][1][despesa_index]);
+            }
+            
+            let receitas = []
+            
+            for(let i = 0;i<arrs.length;i++){
+                let receita_index = arrs[i][0].indexOf('receita');
+                receitas.push(arrs[i][1][receita_index]);
+            }
+
+
+            this.dataset = {
+                labels : ['setembro','outubro','novembro','desembro','janeiro','fevereiro','março'],
+                datasets : [{
+                    label: 'custos',
+                    data:custos
+                },{
+                    label:'despesas',
+                    data:despesas
+                },{
+                    label:'receitas',
+                    data:receitas
+                }]
+            }
+
+            //alert(custos_index)
+
+            
+
+            
+        } 
+    }
 }
-
-    },
- */
-    mounted(){
-    
-    var chart_fin_elem = document.getElementById('chart_fin');
-
- 
-
- new Chart(chart_fin_elem, {
-    type: 'line',
-    data: {
-        labels:["janeiro","fevereiro","março"], 
-        datasets :[{
-            backgroundColor: 'rgb(255, 99, 132)',
-            borderColor: 'rgb(255, 99, 132)',
-            data:[100,200, 0.4]}],
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: false
-                }
-            }]
-        }
-    }
-}});
-    }
-}
-
-/* function traca_grafico_linha(){
-    
-} */
-
-
-/* function transforma_em_ponto(arr, x, y){
-    function strip_em_ponto(item){
-        let new_item = {
-                        "x": item[x],
-                        "y": item[y]
-                        };
-        return new_item;
-    }
-    return arr.map(strip_em_ponto);
-} */
-
-
-
-
-
-
-function convert_epoch (arr){
-    function epoch_to_mes(item)
-        {
-            item["occured_at"] = moment(parseInt(item["occured_at"])).format("YYYY-MM")
-            return item
-        }
-        let new_arr = arr.map(epoch_to_mes);
-        return new_arr
-    }
-
-
 </script>
 
 <style scoped>
-
 
 </style>
