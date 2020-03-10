@@ -28,17 +28,7 @@ function grupo_sum (arr, categoria, valores){
                 Object.keys(grupos).forEach(key => somas.push(lodash.sumBy(grupos[key],valores)))
                 return [Object.keys(grupos),somas]
                 }
-function cria_dataset(nomes, valores){
-    return {
-        labels: nomes,
-        datasets:[
-            {
-                label: JSON.stringify(nomes),
-                data: valores
-            }
-        ]
-    }
-}
+
 
 export default {
     'name': 'graphs',
