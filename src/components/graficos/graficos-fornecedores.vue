@@ -11,7 +11,6 @@
 
 <script>
 
-var moment =require('moment');
 var lodash = require('lodash');
 import {epoch_to_month} from '../funcoes/epoch_to_month'
 import {Grafico} from '../funcoes/Grafico'

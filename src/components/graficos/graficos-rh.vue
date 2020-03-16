@@ -11,7 +11,6 @@
 
 <script>
 
-var moment =require('moment');
 import {epoch_to_month} from '../funcoes/epoch_to_month'
 import {Grafico} from '../funcoes/Grafico'
 import {cont_pot_categoria} from '../funcoes/cont_pot_categoria'
