@@ -87,6 +87,7 @@ body{
     height : 50vh;
     min-width: 100px; 
     padding-right: 5px;
+    max-height: 80vw;
 }
 
 .quadro{
