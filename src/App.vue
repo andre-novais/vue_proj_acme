@@ -84,7 +84,7 @@ body{
 }
 .grafico {
     width : 100vw;
-    height : 30vh;
+    height : 50vh;
     min-width: 100px; 
     padding-right: 5px;
 }
