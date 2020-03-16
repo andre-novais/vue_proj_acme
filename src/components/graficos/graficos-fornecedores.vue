@@ -40,8 +40,8 @@ export default {
                 })
                 
                 mapeamento_parceiros.chart.yAxis(0).labels().format('R${%value}')
-                mapeamento_parceiros.chart.xAxis().title('Montante')
-                mapeamento_parceiros.chart.yAxis().title('Mês')
+                mapeamento_parceiros.chart.yAxis().title('Montante')
+                mapeamento_parceiros.chart.xAxis().title('Mês')
                 mapeamento_parceiros.desenha('contagem_clientes');
                 }
             )

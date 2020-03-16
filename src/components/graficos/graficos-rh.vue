@@ -32,8 +32,8 @@ export default {
                 var contagem_funcionarios = new Grafico('Total de Funcionarios');
 
                 contagem_funcionarios.setSeriesByFunc(this.list,cont_pot_categoria,'total de funcionarios','line','occured_at', 'cd_funcionario')
-                contagem_funcionarios.chart.xAxis().title('N Funcionarios')
-                contagem_funcionarios.chart.yAxis().title('Mês')
+                contagem_funcionarios.chart.yAxis().title('N Funcionarios')
+                contagem_funcionarios.chart.xAxis().title('Mês')
                 contagem_funcionarios.desenha('contagem_funcionarios');
                 }
             )
