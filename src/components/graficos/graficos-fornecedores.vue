@@ -51,14 +51,5 @@ export default {
 </script>
 
 <style scoped>
-.grafico {
-    width : 60vw;
-    height: 30vw;
-}
-
-.quadro{
-    background-color: coral;
-    padding: 0.5vw;    
-}
 
 </style>

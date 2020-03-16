@@ -82,4 +82,16 @@ body{
   min-width: 7vw;
   margin-bottom: 5px;
 }
+.grafico {
+    width : 100vw;
+    height : 30vh;
+    min-width: 100px; 
+    padding-right: 5px;
+}
+
+.quadro{
+    background-color: coral;
+    padding: 0.5vw; 
+    margin-bottom: 5px;   
+}
 </style>
