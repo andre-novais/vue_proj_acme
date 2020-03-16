@@ -33,7 +33,8 @@ export default {
                 var contagem_clientes = new Grafico('Total de Clientes');
 
                 contagem_clientes.setSeriesByFunc(this.list,cont_pot_categoria,'total de clientes','line','occured_at', 'id_cliente')
-
+                contagem_clientes.chart.xAxis().title('N Clientes')
+                contagem_clientes.chart.yAxis().title('Mês')
                 contagem_clientes.desenha('contagem_clientes');
                 }
             )

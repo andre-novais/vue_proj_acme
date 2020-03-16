@@ -34,13 +34,15 @@ export default {
                     num++
                 });
                 
-                var contagem_clientes = new Grafico('Parceiros');
+                var mapeamento_parceiros = new Grafico('Parceiros');
                 fornecedores.forEach(fornecedor => {
-                    contagem_clientes.setSeriesByFunc(this.list,sum_categoria,fornecedor['nome'],'bar','occured_at','cd_fornecedor',fornecedor['id'],'vl_transacao');
+                    mapeamento_parceiros.setSeriesByFunc(this.list,sum_categoria,fornecedor['nome'],'bar','occured_at','cd_fornecedor',fornecedor['id'],'vl_transacao');
                 })
                 
-
-                contagem_clientes.desenha('contagem_clientes');
+                mapeamento_parceiros.chart.yAxis(0).labels().format('R${%value}')
+                mapeamento_parceiros.chart.xAxis().title('Montante')
+                mapeamento_parceiros.chart.yAxis().title('Mês')
+                mapeamento_parceiros.desenha('contagem_clientes');
                 }
             )
     }

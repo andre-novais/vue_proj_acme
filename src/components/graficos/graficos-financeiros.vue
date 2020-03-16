@@ -48,6 +48,8 @@ export default {
                     'line'
                 );
                 receitas_custos.desenha('receitas_custos')
+                receitas_custos.chart.xAxis().title('Receita/Custo')
+                receitas_custos.chart.yAxis().title('Mês')
                 receitas_custos.chart.yAxis(0).labels().format('R${%value}')
                 
                 var entrada_saida = new Grafico('Funding e Necessidade de Caixa por Mês');
@@ -66,6 +68,8 @@ export default {
                     'line'
                 );
                 entrada_saida.desenha('entrada_saida');
+                entrada_saida.chart.xAxis().title('Movimentação')
+                entrada_saida.chart.yAxis().title('Mês')
                 entrada_saida.chart.yAxis(0).labels().format('R${%value}')
                 
             })

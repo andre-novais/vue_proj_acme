@@ -29,11 +29,12 @@ export default {
             .then(res =>{
                 this.list = epoch_to_month(res["body"]);
                                 
-                var contagem_clientes = new Grafico('Total de Funcionarios');
+                var contagem_funcionarios = new Grafico('Total de Funcionarios');
 
-                contagem_clientes.setSeriesByFunc(this.list,cont_pot_categoria,'total de funcionarios','line','occured_at', 'cd_funcionario')
-
-                contagem_clientes.desenha('contagem_funcionarios');
+                contagem_funcionarios.setSeriesByFunc(this.list,cont_pot_categoria,'total de funcionarios','line','occured_at', 'cd_funcionario')
+                contagem_funcionarios.chart.xAxis().title('N Funcionarios')
+                contagem_funcionarios.chart.yAxis().title('Mês')
+                contagem_funcionarios.desenha('contagem_funcionarios');
                 }
             )
     }
