@@ -1,22 +1,20 @@
 <template>
-    <div>
-    <div id="container" style="width : 60vw; height : 50vh; max-width: 500px; max-height: 400px;">
+    <div class="row justify-content-center align-items-center">
+        <div class="col-sm-12 col-md-5 grafico">
+            <div id="receitas_custos" class="grafico col-md-12 quadro rounded"/>  
+        </div>
+        <div class="col-sm-12 col-md-5 col-md-offset-2 grafico">
+            <div id="entrada_saida" class="grafico quadro col-md-12 rounded"/>
+        </div>
         
+       
     </div>
-    <div><button @click="desenha(list)">desenha</button></div>
-    <div>{{ JSON.stringify(list) }}</div></div>
 </template>
 
-
 <script>
-
-var anychart = require('anychart')
-import epochToMonthInt from './functions/epochToMonthInt.js'
 var moment =require('moment')
-
-//var list = [{label: "Chocolate" , y:5},{label: "Rhubarb compote" , y:2},{label: "Crêpe Suzette" , y:2},{label: "American blueberry" , y:2},{label: "Buttermilk" , y:1}]
-/* var list = this.$http.get("https://projeto-acme.herokuapp.com/financeiro", {headers: {'Access-Control-Allow-Origin': "*"}})
-            .then(res => epochToMonthInt(res["body"])) */
+import {epoch_to_month} from '../funcoes/epoch_to_month'
+import {Grafico} from '../funcoes/Grafico'
 
 export default {
     data(){
@@ -25,46 +23,66 @@ export default {
         }
     },
     created(){
-        this.$http.get("https://projeto-acme.herokuapp.com/financeiro", {headers: {'Access-Control-Allow-Origin': "*"}})
-            .then(res =>this.list = this.epochToMonthInt2(res["body"]))
         
-        //this.desenha(this.list);
     },
-    methods : {
-        desenha : function (data){   
-            var result = []
-            data.map(
-                json => result.push(
-                    {
-                        "x": json["occured_at"],
-                        "value": json["VL_valor"]
-                    }
-                )
-            )
-            anychart.onDocumentLoad(function () {
-                // create an instance of a pie chart
-                var chart = anychart.pie();
-                // set the data
-                chart.data(result);
-                // set chart title
-                chart.title("Top 5 pancake fillings");
-                // set the container element 
-                chart.container("container");
-                // initiate chart display
-                alert(JSON.stringify(result))
-                chart.draw();
-            });
-        },
-        epochToMonthInt2 : function (arr){
-        function epoch_to_mes(item){
-            item["occured_at"] = moment(parseInt(item["occured_at"])).format("YYYYMM")
-            return item
-            }
-        let new_arr = arr.map(epoch_to_mes);
-        return new_arr
-        }
+    mounted () {
+        
+        this.$http.get("https://projeto-acme.herokuapp.com/financeiro", {headers: {'Access-Control-Allow-Origin': "*"}})
+            .then(res =>{
+                this.list = epoch_to_month(res["body"])
+                
+                var receitas_custos = new Grafico('receitas e custos variaveis');
+
+                receitas_custos.setSeries(
+                    this.list.filter(json=>json['ds_tipificacao']=='receita'),
+                    'occured_at',
+                    'vl_valor',
+                    'receitas',
+                    'line'
+                );
+                receitas_custos.setSeries(
+                    this.list.filter(json=>json['ds_tipificacao']=='custo'),
+                    'occured_at',
+                    'vl_valor',
+                    'custos',
+                    'line'
+                );
+                receitas_custos.desenha('receitas_custos')
+                receitas_custos.chart.yAxis(0).labels().format('R${%value}')
+                
+                var entrada_saida = new Grafico('Funding e Necessidade de Caixa por Mês');
+                entrada_saida.setSeries(
+                    this.list.filter(json=>json['ds_tipificacao']=='entrada_com_contrapartida'),
+                    'occured_at',   
+                    'vl_valor',
+                    'Funding',
+                    'line'
+                );
+                entrada_saida.setSeries(
+                    this.list.filter(json=>json['ds_tipificacao']=='despesa'),
+                    'occured_at',
+                    'vl_valor',
+                    'Despendio Administrativo',
+                    'line'
+                );
+                entrada_saida.desenha('entrada_saida');
+                entrada_saida.chart.yAxis(0).labels().format('R${%value}')
+                
+            })
     }
+}
+</script>
+
+<style scoped>
+.grafico {
+    width : 60vw;
+    height: 30vw;
+}
+
+.quadro{
+    background-color: coral;
+    padding: 0.5vw;    
 }
 
 
-</script>
+</style>
