@@ -1,10 +1,10 @@
 <template>
     <div class="row justify-content-center align-items-center">
-        <div class="col-sm-12 col-md-5 grafico">
-            <div id="receitas_custos" class="grafico col-md-12 quadro rounded"/>  
+        <div class="col-sm-12 col-md-5">
+            <div id="receitas_custos" class=" grafico quadro col-md-12  rounded"/>  
         </div>
-        <div class="col-sm-12 col-md-5 col-md-offset-2 grafico">
-            <div id="entrada_saida" class="grafico quadro col-md-12 rounded"/>
+        <div class="col-sm-12 col-md-5 col-md-offset-2">
+            <div id="entrada_saida" class=" grafico quadro col-md-12 rounded"/>
         </div>
         
        
