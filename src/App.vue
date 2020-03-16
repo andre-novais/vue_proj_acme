@@ -83,7 +83,7 @@ body{
   margin-bottom: 5px;
 }
 .grafico {
-    width : 100vw;
+    width : 95vw;
     height : 50vh;
     min-width: 100px; 
     padding-right: 5px;
