@@ -81,18 +81,24 @@ body{
 .botao{
   min-width: 7vw;
   margin-bottom: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 .grafico {
-    width : 95vw;
-    height : 50vh;
-    min-width: 100px; 
-    padding-right: 5px;
-    max-height: 80vw;
+  width : 95vw;
+  height : 50vh;
+  min-width: 100px; 
+  padding-right: 5px;
+  max-height: 80vw;
 }
 
 .quadro{
-    background-color: coral;
-    padding: 0.5vw; 
-    margin-bottom: 5px;   
+  background-color: coral;
+  padding: 0.5vw; 
+  margin-bottom: 5px;   
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
