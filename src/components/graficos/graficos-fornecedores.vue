@@ -3,9 +3,6 @@
         <div class="row justify-content-center align-items-center">
             <div id="contagem_clientes" class="grafico col-sm-12 quadro rounded"/>  
         </div>
-        <!-- <div class="col-sm-6">
-            <div id="entrada_saida" class="grafico col-sm-12 quadro  rounded"/>
-        </div> -->
     </div>
 </template>
 

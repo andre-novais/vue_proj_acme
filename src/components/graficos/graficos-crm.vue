@@ -1,8 +1,11 @@
 <template>
     <div class="container">
-        <div class="col-sm-12">
-            <div id="contagem_clientes" class="grafico col-sm-12 quadro rounded"/>  
+        <div class="row">
+            <div class="col-sm-12">
+                <div id="contagem_clientes" class="grafico col-sm-12 quadro rounded"/>  
+            </div>
         </div>
+        
     </div>
 </template>
 

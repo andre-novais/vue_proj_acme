@@ -1,11 +1,10 @@
 <template>
     <div class="container">
-        <div class="col-sm-12 justify-content-center align-items-center">
-            <div id="contagem_funcionarios" class="grafico col-sm-12 quadro rounded"/>  
+        <div class="row">
+            <div class="col-sm-12 justify-content-center align-items-center">
+                <div id="contagem_funcionarios" class="grafico col-sm-12 quadro rounded"/>  
+            </div>
         </div>
-        <!-- <div class="col-sm-6">
-            <div id="entrada_saida" class="grafico col-sm-12 quadro  rounded"/>
-        </div> -->
     </div>
 </template>
 
